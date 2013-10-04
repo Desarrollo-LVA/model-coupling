@@ -129,4 +129,59 @@ public class ModeloMalla
                     }
         }while(!linea.startsWith("ENDDATA"));
     }
+    
+    public void cargarEspesores(File archivo) throws FileNotFoundException, IOException
+    {
+        String nombre = archivo.getName();
+        BufferedReader bf = new BufferedReader(new FileReader(archivo));
+        
+        if(nombre.endsWith(".asc"))
+            cargaASC(bf);
+        else
+            if(nombre.endsWith(".csv"))
+                cargaCSV(bf); 
+        bf.close();
+    }
+
+    private void cargaASC(BufferedReader bf) throws IOException {
+        String linea,temp;
+        int indice;
+        double valor;
+            
+        do
+        {
+            linea = bf.readLine();
+            if(linea.length() == 21)
+            {
+                temp = linea.substring(3, 8);
+                indice = Integer.parseInt(temp);
+                valor = Double.parseDouble(linea.substring(9));
+                Elemento get = (Elemento)elementos.get(new Integer(indice));
+                get.propiedad = valor;
+                
+            }
+            
+            
+        }while(!linea.endsWith("       0"));
+    }
+
+    private void cargaCSV(BufferedReader bf) throws IOException 
+    {
+        String linea,temp;
+        int indice;
+        double valor;
+        
+        do
+        {
+            linea = bf.readLine();
+            if(linea.startsWith("Elem"))
+            {
+                indice = Integer.parseInt(linea.substring(6,11));
+                valor = Double.parseDouble(linea.substring(12));
+                Elemento get = (Elemento)elementos.get(new Integer(indice));
+                get.propiedad = valor;
+                
+            }
+        }while(!linea.isEmpty());
+    }
 }
