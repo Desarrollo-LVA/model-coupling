@@ -7,6 +7,8 @@ public class Elemento
     public Elemento(int[] nodos) 
     {
         this.nodos = nodos;
+        
+        
     }
     
     

@@ -9,7 +9,7 @@ public class Nodo
         this.vertices = vertices;
         for (int i = 0; i < vertices.length; i++) 
         {
-            System.out.print(vertices +" ");
+            System.out.print(vertices[i] +" ");
         }
         System.out.println("");
     }
