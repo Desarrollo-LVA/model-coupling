@@ -1,6 +1,7 @@
 package Ejecucion;
 
 import Base.ModeloMalla;
+import Interpolacion.Shepard;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,7 +32,11 @@ public class Ppal
         {
             Logger.getLogger(Ppal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        destino.muestra();
+        Shepard shepard = new Shepard(fuente,destino);
         
+        shepard.basico(1.0);
         
+        destino.muestra();
     }
 }

@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class ModeloMalla 
@@ -183,5 +185,29 @@ public class ModeloMalla
                 
             }
         }while(!linea.isEmpty());
+    }
+
+    public Iterator listaElementos() 
+    {
+        return elementos.entrySet().iterator();
+    }
+
+    public Nodo getNodo(int vertFuente) 
+    {
+        return (Nodo)nodos.get(new Integer(vertFuente));
+    }
+
+    public void muestra() 
+    {
+        System.out.println(fuente.getName());
+        System.out.println("Elementos: "+elementos.size());
+        System.out.println("Nodos: "+nodos.size()+"\n");
+        Iterator iterator = elementos.entrySet().iterator();
+        while(iterator.hasNext())
+        {
+            Map.Entry next = (Map.Entry) iterator.next();
+            
+            System.out.println(next.getKey() + "\t" +next.getValue());
+        }
     }
 }
