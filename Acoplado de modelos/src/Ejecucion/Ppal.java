@@ -32,10 +32,10 @@ public class Ppal
         {
             Logger.getLogger(Ppal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        destino.muestra();
+        
         Shepard shepard = new Shepard(fuente,destino);
         
-        shepard.basico(1.0);
+        shepard.originalVerticesNoLocal(1.0);
         
         destino.muestra();
     }

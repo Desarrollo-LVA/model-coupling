@@ -210,4 +210,25 @@ public class ModeloMalla
             System.out.println(next.getKey() + "\t" +next.getValue());
         }
     }
+
+    public void generaCentros() 
+    {
+        Iterator listaElementos = listaElementos();
+        Nodo n;
+        while(listaElementos.hasNext())
+        {
+            Elemento next = (Elemento)listaElementos.next();
+            n = new Nodo(new double[]{0,0,0});
+            for(int nodo : next.vertices())
+            {
+                Nodo nodo1 = getNodo(nodo);
+                for (int i = 0; i < 3;i++) 
+                {
+                    n.vertices[i] += nodo1.vertices[i]/nodo1.vertices.length;
+                }
+            }
+            
+            next.centro(n);
+        }
+    }
 }

@@ -4,6 +4,7 @@ public class Elemento
 {
     int[] nodos;
     double propiedad;
+    Nodo centro;
 
     public Elemento(int[] nodos) 
     {
@@ -35,5 +36,14 @@ public class Elemento
         }
         salida += "valor = "+propiedad;
         return salida;
+    }
+
+    void centro(Nodo n) {
+        centro = n;
+    }
+    
+    public Nodo centro()
+    {
+        return centro;
     }
 }
