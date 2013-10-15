@@ -2,13 +2,16 @@
 package Base;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 
 public class ModeloMalla 
@@ -217,7 +220,7 @@ public class ModeloMalla
         Nodo n;
         while(listaElementos.hasNext())
         {
-            Elemento next = (Elemento)listaElementos.next();
+            Elemento next = (Elemento) ((Map.Entry)listaElementos.next()).getValue();
             n = new Nodo(new double[]{0,0,0});
             for(int nodo : next.vertices())
             {
@@ -230,5 +233,70 @@ public class ModeloMalla
             
             next.centro(n);
         }
+    }
+
+    public int numeElementos() 
+    {
+        return this.elementos.size();
+    }
+    
+    public String estadistico()
+    {
+        Object[] toArray = elementos.values().toArray();
+        double media = 0,desv = 0;
+        
+        for (Object elemento:toArray) 
+        {
+            media += ((Elemento)elemento).valor();
+        }
+        media = media / toArray.length;
+        
+        for(Object elemento: toArray)
+        {
+            desv += Math.pow(((Elemento)elemento).valor() - media,2);
+        }
+        
+        desv = Math.sqrt(desv / toArray.length);
+        return "Media = "+ media +" Desviacion = "+desv;
+    }
+    
+    public File generarASC(String nombre) throws IOException
+    {
+        String parent = fuente.getParent();
+        File salida = new File(parent+"\\"+nombre);
+        if(!salida.exists())
+            salida.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new FileWriter(salida));
+        String linea;
+        Iterator listaElementos = listaElementos();
+        while(listaElementos.hasNext())
+        {
+            Map.Entry entrada = (Map.Entry)listaElementos.next();
+            linea = "   "+ entrada.getKey() +"  "+((Elemento)entrada.getValue()).valor();
+            bw.write(linea);
+            bw.newLine();
+        }
+        
+        return salida;
+    }
+    
+    public File generarCSV(String nombre) throws IOException
+    {
+        String parent = fuente.getParent();
+        File salida = new File(parent+"\\"+nombre);
+        if(!salida.exists())
+            salida.createNewFile();
+        BufferedWriter bw = new BufferedWriter(new FileWriter(salida));
+        String linea;
+        Iterator listaElementos = listaElementos();
+        while(listaElementos.hasNext())
+        {
+            Map.Entry entrada = (Map.Entry)listaElementos.next();
+            linea = "Elem  "+ entrada.getKey() +","+((Elemento)entrada.getValue()).valor();
+            bw.write(linea);
+            bw.newLine();
+        }
+        
+        return salida;
     }
 }

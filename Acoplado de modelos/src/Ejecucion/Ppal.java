@@ -33,10 +33,52 @@ public class Ppal
             Logger.getLogger(Ppal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        fuente.generaCentros();
+        destino.generaCentros();
+        
         Shepard shepard = new Shepard(fuente,destino);
+        System.out.println(fuente.estadistico());
         
-        shepard.originalVerticesNoLocal(1.0);
-        
-        destino.muestra();
+//        System.out.println("Original por vertices y global");
+//        shepard.originalVerticesNoLocal(12.0);        
+//        System.out.println(destino.estadistico());
+//        
+//        System.out.println("Original por centros y global");
+//        shepard.originalCentrosNoLocal(12.0);
+//        System.out.println(destino.estadistico());
+//        
+//        System.out.println("Original por vertices y local");
+//        shepard.originalVerticesLocal(12.0,3.0);
+//        System.out.println(destino.estadistico());
+//        
+//        System.out.println("Original por centros y local");
+//        shepard.originalCentrosLocal(12.0,3.0);
+//        System.out.println(destino.estadistico());
+//        
+//        System.out.println("R mayuscula por centros y local");
+//        shepard.rMayusCentrosLocal(12.0,10.0);
+//        System.out.println(destino.estadistico());
+//        
+//        System.out.println("R mayuscula por centros y global");
+//        shepard.rMayusCentrosNoLocal(12.0);
+//        System.out.println(destino.estadistico());
+//        
+        System.out.println("R mayuscula por vertices y local");
+        shepard.rMayusVerticesLocal(28.0);
+        System.out.println(destino.estadistico());
+        try 
+        {
+            destino.generarCSV("Espesores generados R mayuscula.csv");
+    //        System.out.println("R mayuscula por vertices y global");
+    //        shepard.rMayusVerticesNoLocal();
+    //        System.out.println(destino.estadistico());
+              
+    //        System.out.println("R mayuscula por vertices y global");
+    //        shepard.originalVerticesNoLocal(12.0);
+    //        System.out.println(destino.estadistico());
+    //        
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
 }

@@ -38,7 +38,8 @@ public class Elemento
         return salida;
     }
 
-    void centro(Nodo n) {
+    void centro(Nodo n) 
+    {
         centro = n;
     }
     

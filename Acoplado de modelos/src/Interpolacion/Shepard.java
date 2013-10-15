@@ -103,27 +103,202 @@ public class Shepard
     
     public void originalCentrosLocal(double paramDistancia,double paramRadio)
     {
+        Iterator elemFuente;
+        Elemento entrada,salida;
         
+        Iterator elemDestino = destino.listaElementos();
+        double sumaDistancias,sumaValores,distancia,ponderacion;
+        
+        fuente.generaCentros();
+        destino.generaCentros();
+        while(elemDestino.hasNext()) //Recorre elementos destino
+        {
+            sumaDistancias = sumaValores = 0; // inicializa sumas
+            salida = (Elemento)((Entry)elemDestino.next()).getValue();
+            elemFuente = fuente.listaElementos(); //carga fuentes
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                entrada = (Elemento)((Entry)elemFuente.next()).getValue();
+                distancia = distanciaCentros(entrada,salida);
+                if(distancia < paramRadio)
+                {
+                    ponderacion = Math.pow(distancia, paramDistancia);
+
+                    sumaDistancias += 1/ponderacion;
+                    sumaValores += entrada.valor() / ponderacion;
+                }
+            }
+            
+            salida.valor(sumaValores / sumaDistancias);
+        }
     }
     
-    public void rMayusVerticesNoLocal(double paramDistancia)
+    public void rMayusVerticesNoLocal()
     {
+        Iterator elemFuente;
+        Elemento entrada,salida;
+        Iterator elemDestino = destino.listaElementos();
+        double sumaDistancias,sumaValores,distancia,ponderacion,rMayor;
+        double dist[];
+        int count;
         
+        while(elemDestino.hasNext()) //Recorre elementos destino
+        {
+            sumaDistancias = sumaValores = 0; // inicializa sumas
+            salida = (Elemento)((Entry)elemDestino.next()).getValue();
+            elemFuente = fuente.listaElementos(); //carga fuentes
+            rMayor = 0;
+            dist = new double[fuente.numeElementos()];
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                entrada = (Elemento)((Entry)elemFuente.next()).getValue();
+                distancia = distancia(entrada,salida);
+                
+                dist[count] = distancia;
+                count ++;
+                rMayor = (distancia > rMayor)?distancia:rMayor;
+            }
+            elemFuente = fuente.listaElementos();
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                double pow = Math.pow((rMayor - dist[count])/(rMayor * dist[count]),2);
+                sumaDistancias += pow;
+                sumaValores += pow * ((Elemento)((Entry)elemFuente.next()).getValue()).valor();
+                count ++;
+            }
+            
+            salida.valor(sumaValores / sumaDistancias);
+        }
     }
     
-    public void rMayusVerticesLocal(double paramDistanca,double paramRadio)
+    public void rMayusVerticesLocal(double paramRadio)
     {
+        Iterator elemFuente;
+        Elemento entrada,salida;
+        Iterator elemDestino = destino.listaElementos();
+        double sumaDistancias,sumaValores,distancia,ponderacion,rMayor;
+        double dist[];
+        int count;
         
+        while(elemDestino.hasNext()) //Recorre elementos destino
+        {
+            sumaDistancias = sumaValores = 0; // inicializa sumas
+            salida = (Elemento)((Entry)elemDestino.next()).getValue();
+            elemFuente = fuente.listaElementos(); //carga fuentes
+            rMayor = 0;
+            dist = new double[fuente.numeElementos()];
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                entrada = (Elemento)((Entry)elemFuente.next()).getValue();
+                distancia = distancia(entrada,salida);
+                dist[count] = distancia;
+                count ++;
+                
+                rMayor = (distancia > rMayor && distancia < paramRadio)?distancia:rMayor;
+            }
+            elemFuente = fuente.listaElementos();
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                Elemento e = (Elemento)((Entry)elemFuente.next()).getValue();
+                if(dist[count] < paramRadio)
+                {
+                    double pow = Math.pow((rMayor - dist[count])/(rMayor * dist[count]),2);
+                    sumaDistancias += pow;
+                    sumaValores += pow * e.valor();
+                }
+                count ++;
+            }
+            
+            salida.valor(sumaValores / sumaDistancias);
+        }
     }
     
     public void rMayusCentrosNoLocal(double paramDistancia)
     {
+        Iterator elemFuente;
+        Elemento entrada,salida;
+        Iterator elemDestino = destino.listaElementos();
+        double sumaDistancias,sumaValores,distancia,ponderacion,rMayor;
+        double dist[];
+        int count;
         
+        while(elemDestino.hasNext()) //Recorre elementos destino
+        {
+            sumaDistancias = sumaValores = 0; // inicializa sumas
+            salida = (Elemento)((Entry)elemDestino.next()).getValue();
+            elemFuente = fuente.listaElementos(); //carga fuentes
+            rMayor = 0;
+            dist = new double[fuente.numeElementos()];
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                entrada = (Elemento)((Entry)elemFuente.next()).getValue();
+                distancia = distanciaCentros(entrada,salida);
+                
+                dist[count] = distancia;
+                count ++;
+                rMayor = (distancia > rMayor)?distancia:rMayor;
+            }
+            elemFuente = fuente.listaElementos();
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                double pow = Math.pow((rMayor - dist[count])/(rMayor * dist[count]),2);
+                sumaDistancias += pow;
+                sumaValores += pow * ((Elemento)((Entry)elemFuente.next()).getValue()).valor();
+                count ++;
+            }
+            
+            salida.valor(sumaValores / sumaDistancias);
+        }
     }
     
     public void rMayusCentrosLocal(double paramDistancia,double paramRadio)
     {
+        Iterator elemFuente;
+        Elemento entrada,salida;
+        Iterator elemDestino = destino.listaElementos();
+        double sumaDistancias,sumaValores,distancia,ponderacion,rMayor;
+        double dist[];
+        int count;
         
+        while(elemDestino.hasNext()) //Recorre elementos destino
+        {
+            sumaDistancias = sumaValores = 0; // inicializa sumas
+            salida = (Elemento)((Entry)elemDestino.next()).getValue();
+            elemFuente = fuente.listaElementos(); //carga fuentes
+            rMayor = 0;
+            dist = new double[fuente.numeElementos()];
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                entrada = (Elemento)((Entry)elemFuente.next()).getValue();
+                distancia = distanciaCentros(entrada,salida);
+                
+                dist[count] = distancia;
+                count ++;
+                rMayor = (distancia > rMayor && distancia < paramRadio)?distancia:rMayor;
+            }
+            elemFuente = fuente.listaElementos();
+            count = 0;
+            while(elemFuente.hasNext()) //recorre elementos fuente
+            {
+                Elemento e = (Elemento)((Entry)elemFuente.next()).getValue();
+                if(dist[count] < paramRadio)
+                {
+                    double pow = Math.pow((rMayor - dist[count])/(rMayor * dist[count]),2);
+                    sumaDistancias += pow;
+                    sumaValores += pow * e.valor();
+                }
+                count ++;
+            }
+            
+            salida.valor(sumaValores / sumaDistancias);
+        }
     }
     public double distancia(Elemento entrada, Elemento salida) 
     {
