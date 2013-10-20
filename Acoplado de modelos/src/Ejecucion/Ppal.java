@@ -38,47 +38,17 @@ public class Ppal
         
         Shepard shepard = new Shepard(fuente,destino);
         System.out.println(fuente.estadistico());
-        
-//        System.out.println("Original por vertices y global");
-//        shepard.originalVerticesNoLocal(12.0);        
-//        System.out.println(destino.estadistico());
-//        
-//        System.out.println("Original por centros y global");
-//        shepard.originalCentrosNoLocal(12.0);
-//        System.out.println(destino.estadistico());
-//        
-//        System.out.println("Original por vertices y local");
-//        shepard.originalVerticesLocal(12.0,3.0);
-//        System.out.println(destino.estadistico());
-//        
-//        System.out.println("Original por centros y local");
-//        shepard.originalCentrosLocal(12.0,3.0);
-//        System.out.println(destino.estadistico());
-//        
-//        System.out.println("R mayuscula por centros y local");
-//        shepard.rMayusCentrosLocal(12.0,10.0);
-//        System.out.println(destino.estadistico());
-//        
-//        System.out.println("R mayuscula por centros y global");
-//        shepard.rMayusCentrosNoLocal(12.0);
-//        System.out.println(destino.estadistico());
 //        
         System.out.println("R mayuscula por vertices y local");
         shepard.rMayusVerticesLocal(28.0);
-        System.out.println(destino.estadistico());
         try 
         {
             destino.generarCSV("Espesores generados R mayuscula.csv");
-    //        System.out.println("R mayuscula por vertices y global");
-    //        shepard.rMayusVerticesNoLocal();
-    //        System.out.println(destino.estadistico());
-              
-    //        System.out.println("R mayuscula por vertices y global");
-    //        shepard.originalVerticesNoLocal(12.0);
-    //        System.out.println(destino.estadistico());
-    //        
+            destino.generarASC("Espesores generados R mayuscula.asc");
         } catch (IOException ex) {
             System.out.println(ex);
         }
+        fuente.muestra();
+        destino.muestra();
     }
 }

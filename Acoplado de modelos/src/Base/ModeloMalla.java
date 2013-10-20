@@ -206,12 +206,18 @@ public class ModeloMalla
         System.out.println("Elementos: "+elementos.size());
         System.out.println("Nodos: "+nodos.size()+"\n");
         Iterator iterator = elementos.entrySet().iterator();
+        double min=100,max=0;
         while(iterator.hasNext())
         {
             Map.Entry next = (Map.Entry) iterator.next();
+            Object value = next.getValue();
+            double valor = ((Elemento)value).valor();
+            min = (min > valor)?valor:min;
+            max = (max < valor)?valor:max;
+            //System.out.println(next.getKey() + "\t" +value);
             
-            System.out.println(next.getKey() + "\t" +next.getValue());
         }
+        System.out.println("Máximo: "+max+" Mínimo: "+min);
     }
 
     public void generaCentros() 
@@ -276,7 +282,7 @@ public class ModeloMalla
             bw.write(linea);
             bw.newLine();
         }
-        
+        bw.close();
         return salida;
     }
     
@@ -296,7 +302,7 @@ public class ModeloMalla
             bw.write(linea);
             bw.newLine();
         }
-        
+        bw.close();
         return salida;
     }
 }
